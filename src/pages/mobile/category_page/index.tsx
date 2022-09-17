@@ -18,6 +18,10 @@ const MCategoryPage = (props: PageProps) => {
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
   const router = useRouter();
 
+  const linkRoute = useCallback((category: string) => {
+    return `/mobile/categories/${router.query.category}/${category}?category=${router.query.category}&page=1&show_first=new`;
+  }, []);
+
   const newData = useMemo(() => {
     if (!data) return { big: [], small: [] };
     const big = data.subcategories.slice(0, 3);
@@ -42,9 +46,6 @@ const MCategoryPage = (props: PageProps) => {
       },
     });
   */
-  const linkRoute = useCallback((category: string) => {
-    return `/mobile/categories/${router.query.category}/${category}?category=${router.query.category}&page=1&show_first=new`;
-  }, []);
 
   const mapBigItems = data?.subcategories.map((item) => (
     <Link key={item.id} href={linkRoute(item.key)}>
