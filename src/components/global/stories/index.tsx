@@ -3,32 +3,37 @@ import StoriesStyle from "./style";
 import Image from "next/image";
 import { motion, useElementScroll, useTransform } from "framer-motion";
 import { ChevronSmallDownIcon } from "../../../resources/icons/CommonIcons";
+import { StoriesModalProps } from "../../desktop/modals/stories_modal";
 
-interface Iprops {}
+interface Iprops {
+  onStoriesPress: (state: StoriesModalProps) => void;
+  hideControls?: boolean;
+}
 
 const data = [
-  { id: 0, image_url: "shoes.png", isRead: false },
-  { id: 1, image_url: "gamepad.png", isRead: false },
-  { id: 2, image_url: "pot.webp", isRead: true },
-  { id: 3, image_url: "shoes.png", isRead: true },
-  { id: 4, image_url: "gamepad.png", isRead: true },
-  { id: 5, image_url: "pot.webp", isRead: true },
-  { id: 6, image_url: "shoes.png", isRead: true },
-  { id: 7, image_url: "gamepad.png", isRead: true },
-  { id: 8, image_url: "pot.webp", isRead: true },
-  { id: 9, image_url: "shoes.png", isRead: true },
-  { id: 10, image_url: "gamepad.png", isRead: true },
-  { id: 11, image_url: "pot.webp", isRead: true },
-  { id: 12, image_url: "shoes.png", isRead: true },
-  { id: 13, image_url: "gamepad.png", isRead: true },
-  { id: 14, image_url: "pot.webp", isRead: true },
-  { id: 15, image_url: "shoes.png", isRead: true },
-  { id: 16, image_url: "gamepad.png", isRead: true },
-  { id: 17, image_url: "pot.webp", isRead: true },
+  { id: 0, image_url: "shoes.png", isRead: false, type: "news" },
+  { id: 1, image_url: "gamepad.png", isRead: false, type: "news" },
+  { id: 2, image_url: "pot.webp", isRead: false, type: "stories" },
+  { id: 3, image_url: "shoes.png", isRead: false, type: "news" },
+  { id: 4, image_url: "gamepad.png", isRead: true, type: "news" },
+  { id: 5, image_url: "pot.webp", isRead: true, type: "stories" },
+  { id: 6, image_url: "shoes.png", isRead: true, type: "stories" },
+  { id: 7, image_url: "gamepad.png", isRead: true, type: "stories" },
+  { id: 8, image_url: "pot.webp", isRead: true, type: "stories" },
+  { id: 9, image_url: "shoes.png", isRead: true, type: "stories" },
+  { id: 10, image_url: "gamepad.png", isRead: true, type: "stories" },
+  { id: 11, image_url: "pot.webp", isRead: true, type: "stories" },
+  { id: 12, image_url: "shoes.png", isRead: true, type: "stories" },
+  { id: 13, image_url: "gamepad.png", isRead: true, type: "stories" },
+  { id: 14, image_url: "pot.webp", isRead: true, type: "stories" },
+  { id: 15, image_url: "shoes.png", isRead: true, type: "news" },
+  { id: 16, image_url: "gamepad.png", isRead: true, type: "stories" },
+  { id: 17, image_url: "pot.webp", isRead: true, type: "stories" },
 ];
 
 const ITEM_WIDTH = 84;
 const Stories = (props: Iprops) => {
+  const { onStoriesPress, hideControls } = props;
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isScrollable, setIsScrollable] = useState(false);
   const { scrollX, scrollXProgress } = useElementScroll(sliderRef);
@@ -36,6 +41,7 @@ const Stories = (props: Iprops) => {
   const rightClipper = useTransform(scrollXProgress, [0.95, 1], [1, 0]);
 
   useEffect(() => {
+    if (hideControls) return;
     if (!sliderRef.current) return;
     sliderRef.current.scrollWidth > sliderRef.current.clientWidth &&
       setIsScrollable(true);
@@ -57,7 +63,10 @@ const Stories = (props: Iprops) => {
   };
 
   const mapItems = data.map((item) => (
-    <div key={item.id} className={`item ${item.isRead ? "read" : ""}`}>
+    <div
+      key={item.id}
+      className={`item ${item.type} ${item.isRead ? "read" : ""}`}
+    >
       <div className="image_wrapper">
         <Image
           src={`/images/${item.image_url}`}

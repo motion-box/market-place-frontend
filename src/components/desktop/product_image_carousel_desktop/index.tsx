@@ -14,6 +14,7 @@ interface Iprops {
     has_guarantee: boolean;
     price: number;
     currency: "uzs" | "usd" | string;
+    product_id: number;
   };
 }
 
@@ -36,10 +37,6 @@ const variants = {
       opacity: 0,
     };
   },
-};
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity;
 };
 
 const ProductImageCarouselDesktop = ({ data }: Iprops) => {
@@ -75,18 +72,6 @@ const ProductImageCarouselDesktop = ({ data }: Iprops) => {
             x: { type: "spring", stiffness: 300, damping: 30 },
             opacity: { duration: 0.2 },
           }}
-          // drag="x"
-          // dragConstraints={{ left: 0, right: 0 }}
-          // dragElastic={1}
-          // onDragEnd={(e, { offset, velocity }) => {
-          //   const swipe = swipePower(offset.x, velocity.x);
-
-          //   if (swipe < -swipeConfidenceThreshold) {
-          //     paginate(1);
-          //   } else if (swipe > swipeConfidenceThreshold) {
-          //     paginate(-1);
-          //   }
-          // }}
           onClick={showImagePreview}
         >
           <Image

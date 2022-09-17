@@ -10,18 +10,27 @@ import "moment/locale/uz-latn";
 import "moment/locale/uz";
 import ModalsProvider from "../src/providers/modals_provider";
 import AppProvider from "../src/providers/app_provider";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
-    <Provider store={store}>
-      <AppProvider>
-        <ModalsProvider>
-          <HeaderDesktop />
-          <Component {...pageProps} />
-          <FooterDesktop />
-        </ModalsProvider>
-      </AppProvider>
-    </Provider>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </Head>
+      <Provider store={store}>
+        <AppProvider>
+          <ModalsProvider>
+            {!router.pathname.includes("mobile") && <HeaderDesktop />}
+            <Component {...pageProps} />
+            {!router.pathname.includes("mobile") && <FooterDesktop />}
+          </ModalsProvider>
+        </AppProvider>
+      </Provider>
+    </>
   );
 }
 

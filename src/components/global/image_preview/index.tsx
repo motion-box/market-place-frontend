@@ -18,6 +18,8 @@ interface Iprops {
   has_guarantee: boolean;
   currency: "uzs" | "usd" | string;
   price: number;
+  product_id: number;
+  is_mobile?: true;
 }
 
 const variants = {
@@ -46,7 +48,15 @@ const swipePower = (offset: number, velocity: number) => {
 };
 
 const ImagePreview = NiceModal.create<Iprops>((props) => {
-  const { activeIndex, images, currency, has_guarantee, price } = props;
+  const {
+    activeIndex,
+    images,
+    currency,
+    has_guarantee,
+    price,
+    product_id,
+    is_mobile,
+  } = props;
   const { t } = useTranslation();
   const modal = useModal();
   const [[page, direction], setPage] = useState([activeIndex, 0]);
@@ -70,9 +80,15 @@ const ImagePreview = NiceModal.create<Iprops>((props) => {
           <CloseIcon width="24" height="24" color="static_white" />
         </button>
         <div className="image_cont">
-          <div className="control prev" onClick={() => paginate(-1)}>
-            <ChevronSmallDownIcon width="20" height="20" color="static_white" />
-          </div>
+          {!is_mobile && (
+            <div className="control prev" onClick={() => paginate(-1)}>
+              <ChevronSmallDownIcon
+                width="20"
+                height="20"
+                color="static_white"
+              />
+            </div>
+          )}
           <div className="image_preview">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
@@ -109,15 +125,22 @@ const ImagePreview = NiceModal.create<Iprops>((props) => {
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="control next" onClick={() => paginate(1)}>
-            <ChevronSmallDownIcon width="20" height="20" color="static_white" />
-          </div>
+          {!is_mobile && (
+            <div className="control next" onClick={() => paginate(1)}>
+              <ChevronSmallDownIcon
+                width="20"
+                height="20"
+                color="static_white"
+              />
+            </div>
+          )}
         </div>
         <div className="buy_button_cont">
           <BuyButton
             price={price}
             currency={currency}
             has_guarantee={has_guarantee}
+            product_id={product_id}
           />
         </div>
       </ImagePreviewStyle>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,6 +9,8 @@ import { useAppSelector } from "../../../../redux/store";
 import { BigIconsType } from "../../../../resources/icons/BigIcons";
 import { productData } from "../../../../resources/testProducts";
 import { FADE_BOTTOM_ANIMATION } from "../../../../resources/constants/animations";
+import { sellerData } from "../../../../resources/testSellers";
+import SellerCard from "../../../../components/global/seller_card";
 
 interface PageProps {}
 
@@ -76,15 +78,15 @@ const sliderData = [
     id: 0,
     key: "recent",
     name_ru: "Товары",
-    name_uz: "Товары",
-    name_oz: "Товары",
+    name_uz: "Махсулотлар",
+    name_oz: "Mahsulotlar",
   },
   {
     id: 1,
     key: "in_archive",
     name_ru: "Продавцы",
-    name_uz: "Продавцы",
-    name_oz: "Продавцы",
+    name_uz: "Сотувчилар",
+    name_oz: "Sotuvchilar",
   },
 ];
 
@@ -97,7 +99,14 @@ type PlaceholderModel = {
   onClick?: () => void;
 };
 
-const hasData = [true, false, false, true];
+const sellersDate = [
+  "online",
+  "5 часов назад",
+  "3 часа назад",
+  "2 дня назад",
+  "1 месяц назад",
+];
+const hasData = [true, true];
 
 const UserFavoritePage = (props: PageProps) => {
   const {} = props;
@@ -105,31 +114,36 @@ const UserFavoritePage = (props: PageProps) => {
   const router = useRouter();
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
   const [activeIndex, setActiveIndex] = useState(Number(0));
-  const [activeData, setActiveData] = useState<any>();
 
-  const placeholderData: PlaceholderModel[] = [
-    {
-      id: 0,
-      title: t("no_message"),
-      description: t("no_message_description"),
-      icon: "LikeBigIcon",
-      button_text: t("add_announcement"),
-    },
-    {
-      id: 1,
-      title: t("no_message_archive"),
-      description: t("no_message_archive_description"),
-      icon: "LikeBigIcon",
-    },
-  ];
+  const placeholderData: PlaceholderModel[] = useMemo(
+    () => [
+      {
+        id: 0,
+        title: t("no_favorites"),
+        description: t("no_favorites_description"),
+        icon: "LikeBigIcon",
+        button_text: t("add_announcement"),
+      },
+      {
+        id: 1,
+        title: t("no_favorites"),
+        description: t("no_favorites_description"),
+        icon: "LikeBigIcon",
+      },
+    ],
+    []
+  );
 
-  useEffect(() => {
-    setActiveData(
-      productData.map((item) => {
-        return { ...item, expire_date: "2022-09-12T19:40" };
-      })
-    );
-  }, []);
+  const sellers = useMemo(
+    () =>
+      sellerData.map((item, index) => ({
+        data: item,
+        type: "favorite",
+        online: sellersDate[index],
+        onCardClick: () => router.push(`/seller/${item.id}/announcements`),
+      })),
+    []
+  );
 
   return (
     <UserFavoritePageStyle>
@@ -138,13 +152,38 @@ const UserFavoritePage = (props: PageProps) => {
         active_page={2}
         pages={pagesData}
         placeholder={placeholderData[activeIndex]}
-        // has_data={hasData[activeIndex]}
-        has_data={false}
+        has_data={hasData[activeIndex]}
         slider={sliderData}
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       >
-        <AnimatePresence exitBeforeEnter></AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
+          {activeIndex === 0 && (
+            <motion.div
+              key={sliderData[0].key}
+              variants={FADE_BOTTOM_ANIMATION}
+              initial="hidden"
+              animate="active"
+              exit="hidden"
+            >
+              <ProductsGridDesktop data={productData} />
+            </motion.div>
+          )}
+          {activeIndex === 1 && (
+            <motion.div
+              key={sliderData[1].key}
+              variants={FADE_BOTTOM_ANIMATION}
+              initial="hidden"
+              animate="active"
+              exit="hidden"
+              className="users_container"
+            >
+              {sellers.map((item) => (
+                <SellerCard key={item.data.id} {...item} />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </UserPageCont>
     </UserFavoritePageStyle>
   );

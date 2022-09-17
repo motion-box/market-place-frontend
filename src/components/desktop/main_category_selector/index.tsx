@@ -17,7 +17,7 @@ const MainCategorySelector = (props: Iprops) => {
   const { t } = useTranslation();
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
   const router = useRouter();
-  const [isFocuse, setFocuse] = useState(false);
+  const [isFocus, setFocus] = useState(false);
 
   const onItemClick = (category: string) => {
     router.push(`/categories/${category}`);
@@ -62,7 +62,7 @@ const MainCategorySelector = (props: Iprops) => {
         <div className="content">
           <SearchInput
             placeholder={t("search_announcements")}
-            setFocuse={setFocuse}
+            setFocus={setFocus}
             styles={{
               height: 60,
               backgroundColor: "card_color",
@@ -83,7 +83,7 @@ const MainCategorySelector = (props: Iprops) => {
             }
           />
           <AnimatePresence>
-            {isFocuse ? <SearchResult key="results" /> : null}
+            {isFocus ? <SearchResult key="results" /> : null}
           </AnimatePresence>
           <div className="categories">{mapCateogories}</div>
         </div>

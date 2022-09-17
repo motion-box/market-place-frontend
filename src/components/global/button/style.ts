@@ -2,6 +2,9 @@ import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 import { ColorsPaletTypes } from "../../../resources/constants/colors";
 
+interface Iprops extends ButtonOptionsType {
+  disabled?: boolean;
+}
 export interface ButtonOptionsType {
   $backgroundColor?: ColorsPaletTypes;
   $width?: "fit-content" | "100%";
@@ -18,7 +21,7 @@ export interface ButtonOptionsType {
   $hoverBorderColor?: ColorsPaletTypes;
 }
 
-const ButtonStyle = styled(motion.button)<ButtonOptionsType>`
+const ButtonStyle = styled(motion.button)<Iprops>`
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -35,6 +38,13 @@ const ButtonStyle = styled(motion.button)<ButtonOptionsType>`
     p.$borderColor &&
     css`
       border: ${`1px solid var(--${p.$borderColor})`};
+    `}
+
+  ${(p) =>
+    p.disabled &&
+    css`
+      opacity: 0.5;
+      pointer-events: none;
     `}
 
   span {

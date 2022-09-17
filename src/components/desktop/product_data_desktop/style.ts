@@ -103,6 +103,7 @@ const ProductDataDesktopStyle = styled(motion.div)`
     }
   }
   .buttons_cont {
+    position: relative;
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;

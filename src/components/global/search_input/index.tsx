@@ -1,15 +1,14 @@
-import React, { FunctionComponent } from "react";
+import React, { useEffect, useRef } from "react";
 import { ColorsPaletTypes } from "../../../resources/constants/colors";
-import { SearchOutlineIcon } from "../../../resources/icons/ColorIcons";
 import { SearchIcon } from "../../../resources/icons/CommonIcons";
-import Button from "../button";
 import SearchInputStyle from "./style";
 
 interface Iprops {
   placeholder: string;
-  setFocuse?: (state: boolean) => void;
+  autoFocus?: true;
+  setFocus?: (state: boolean) => void;
   addition?: React.ReactNode;
-  styles: {
+  styles?: {
     backgroundColor?: ColorsPaletTypes;
     textColor?: ColorsPaletTypes;
     placeholderColor?: ColorsPaletTypes;
@@ -18,22 +17,33 @@ interface Iprops {
 }
 
 const SearchInput = (props: Iprops) => {
-  const actionFunc = (type: "focuse" | "blur") => {
-    if (type === "focuse") {
-      props.setFocuse && props.setFocuse(true);
+  const { autoFocus, setFocus, placeholder, addition, styles } = props;
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus && ref.current) {
+      console.log("focuse");
+      ref.current.focus();
+    }
+  }, []);
+
+  const actionFunc = (type: "focus" | "blur") => {
+    if (type === "focus") {
+      setFocus && setFocus(true);
     } else {
-      props.setFocuse && props.setFocuse(false);
+      setFocus && setFocus(false);
     }
   };
   return (
-    <SearchInputStyle {...props.styles}>
+    <SearchInputStyle {...styles}>
       <SearchIcon width="24" height="24" />
       <input
-        placeholder={props.placeholder}
-        onFocus={() => actionFunc("focuse")}
+        ref={ref}
+        placeholder={placeholder}
+        onFocus={() => actionFunc("focus")}
         onBlur={() => actionFunc("blur")}
       />
-      {props.addition && props.addition}
+      {addition && addition}
     </SearchInputStyle>
   );
 };

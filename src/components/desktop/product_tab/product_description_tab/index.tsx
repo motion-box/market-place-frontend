@@ -1,14 +1,12 @@
 import { useTranslation } from "next-i18next";
 import ProductDescriptionTabStyle from "./style";
 import {
-  animate,
   motion,
   MotionValue,
   useMotionValue,
-  useSpring,
   useTransform,
 } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface Iprops {
   category: string;
@@ -18,6 +16,7 @@ interface Iprops {
   storage: number;
   color: string;
   description: string;
+  isMobile?: true;
 }
 
 const ProductDescriptionTab = (props: Iprops) => {
@@ -29,9 +28,29 @@ const ProductDescriptionTab = (props: Iprops) => {
     storage,
     color,
     description,
+    isMobile,
   } = props;
   const { t } = useTranslation();
   const conditionValue = useMotionValue(condition);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const [isExpandAvailable, setExpandAvailable] = useState(true);
+  const [isExpanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    if (!descriptionRef.current) return;
+    descriptionRef.current.clientHeight > 100
+      ? setExpandAvailable(true)
+      : setExpandAvailable(false);
+  }, []);
+
+  const desciptionControlClick = (type: "expand" | "reduce") => {
+    if (type == "expand") {
+      setExpanded(true);
+    } else {
+      setExpanded(false);
+      window.scrollTo({ top: isMobile ? 490 : 0 });
+    }
+  };
 
   return (
     <ProductDescriptionTabStyle
@@ -39,6 +58,7 @@ const ProductDescriptionTab = (props: Iprops) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ ease: "linear" }}
+      $isMobile={isMobile}
     >
       <div className="table">
         <div className="category">
@@ -71,7 +91,33 @@ const ProductDescriptionTab = (props: Iprops) => {
           <span className="description">{color}</span>
         </div>
       </div>
-      <p>{description}</p>
+      <div
+        className={`description_cont ${
+          isExpanded ? "description_cont_expanded" : ""
+        }`}
+      >
+        <p ref={descriptionRef}>{description}</p>
+        {isExpandAvailable && (
+          <>
+            {!isExpanded && (
+              <div className="clipper">
+                <button
+                  className="expand_btn"
+                  onClick={() => desciptionControlClick("expand")}
+                >
+                  {t("expand")}
+                </button>
+              </div>
+            )}
+            <button
+              className="reduce_btn"
+              onClick={() => desciptionControlClick("reduce")}
+            >
+              {t(t("reduce"))}
+            </button>
+          </>
+        )}
+      </div>
     </ProductDescriptionTabStyle>
   );
 };

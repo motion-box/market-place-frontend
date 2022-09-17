@@ -7,6 +7,7 @@ import * as BigIcons from "../../../../resources/icons/BigIcons";
 import Button from "../../../global/button";
 import { useTranslation } from "next-i18next";
 import { useAppSelector } from "../../../../redux/store";
+import MessageModal, { MessageModalProps } from "../message_modal";
 
 export interface InputModalProps {
   icon: BigIcons.BigIconsType;
@@ -20,10 +21,19 @@ export interface InputModalProps {
     name_uz: string;
     name_oz: string;
   }[];
+  allowBlur?: true;
 }
 
 const InputModal = NiceModal.create<InputModalProps>((props) => {
-  const { icon, title, placeholder, send_path, cancel, selector_data } = props;
+  const {
+    icon,
+    title,
+    placeholder,
+    send_path,
+    cancel,
+    selector_data,
+    allowBlur,
+  } = props;
   const modal = useModal();
   const { t } = useTranslation();
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
@@ -32,6 +42,17 @@ const InputModal = NiceModal.create<InputModalProps>((props) => {
   const sendToBackend = () => {
     console.log(`Path to api endpoint: ${send_path}`);
     modal.remove();
+    if (send_path === "show_accept_modal") {
+      NiceModal.show(MessageModal, {
+        icon: "JugBigIcon",
+        title: t("message_accepted_title"),
+        description: t("message_accepted_description"),
+        button: {
+          name: t("back_to_account"),
+          route: "/user/orders",
+        },
+      } as MessageModalProps);
+    }
   };
 
   const mapData = selector_data?.map((item) => (
@@ -48,7 +69,7 @@ const InputModal = NiceModal.create<InputModalProps>((props) => {
   ));
 
   return (
-    <Modal isModal={modal.visible}>
+    <Modal isModal={modal.visible} allowBlur={allowBlur}>
       <InputModalStyle className="modal_shadow">
         <button
           aria-label="close_button"

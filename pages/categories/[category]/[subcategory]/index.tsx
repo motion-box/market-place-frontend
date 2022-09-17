@@ -9,10 +9,12 @@ import {
   categoriesData,
   SubcategoryModel,
 } from "../../../../src/resources/testCategories";
+import { useAppSelector } from "../../../../src/redux/store";
 
 const Subcategory = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const { locale } = useAppSelector((state) => state.globalSliceReducer);
   const [subcategory, setSubcategory] = useState<
     SubcategoryModel | "all" | null
   >();
@@ -43,7 +45,16 @@ const Subcategory = () => {
 
   return (
     <>
-      <MetaHead title="" description="" />
+      <MetaHead
+        title={`${t("logo")} | ${
+          subcategory !== undefined
+            ? subcategory === "all"
+              ? t("all")
+              : subcategory[`name_${locale}`]
+            : null
+        }`}
+        description=""
+      />
       <SubcategoryPage data={subcategory} />
     </>
   );

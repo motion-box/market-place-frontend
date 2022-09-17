@@ -87,6 +87,40 @@ const ImagePreviewStyle = styled.div`
   .buy_button_cont {
     min-width: 500px;
   }
+
+  @media only screen and (max-width: 1000px) {
+    min-width: 360px;
+    position: relative;
+    background-color: var(--static_black);
+    padding: 0;
+
+    .number_cont {
+      position: fixed;
+    }
+    .close_button {
+      position: fixed;
+      z-index: 10;
+      top: 12px;
+      right: 0px;
+    }
+    .image_cont {
+      margin: 0;
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60vh;
+      grid-template-columns: 1fr;
+    }
+
+    .buy_button_cont {
+      z-index: 10;
+      min-width: 0px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      padding: 0 8px 12px;
+    }
+  }
 `;
 
 export default ImagePreviewStyle;

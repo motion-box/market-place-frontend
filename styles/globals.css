@@ -36,9 +36,11 @@
 
   --static_white: #ffffff;
   --static_white50: rgba(255, 255, 255, 0.5);
+  --static_white12: rgba(255, 255, 255, 0.12);
   --static_black: #161616;
   --static_black30: rgba(22, 22, 22, 0.3);
   --static_red: #d32424;
+  --static_red30: rgba(211, 36, 36, 0.3);
   --static_red50: rgba(211, 36, 36, 0.5);
   --static_green: #32b949;
   --static_gray: #8e8e93;
@@ -68,9 +70,11 @@
 
   --static_white: #ffffff;
   --static_white50: rgba(255, 255, 255, 0.5);
+  --static_white12: rgba(255, 255, 255, 0.12);
   --static_black: #161616;
   --static_black30: rgba(22, 22, 22, 0.3);
   --static_red: #d32424;
+  --static_red30: rgba(211, 36, 36, 0.3);
   --static_red50: rgba(211, 36, 36, 0.5);
   --static_green: #32b949;
   --static_gray: #8e8e93;
@@ -139,6 +143,19 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border-radius: 8px;
+  box-shadow: 0 0 0 30px var(--card_color) inset !important;
+  -webkit-text-fill-color: var(--text_primary) !important;
+}
 
 button {
   background-color: none;
@@ -146,6 +163,9 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
+}
+a {
+  text-decoration: none;
 }
 
 .dialog_shadow {

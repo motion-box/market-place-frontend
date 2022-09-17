@@ -33,7 +33,7 @@ export const FADE_SCALE_ANIMATION = {
 };
 
 export const DIALOG_SLIDE_ANIMATION = {
-  left_hiden: {
+  left_hidden: {
     opacity: 0,
     x: -376,
     transition: { duration: 0.15, ease: "easeInOut" },
@@ -43,9 +43,20 @@ export const DIALOG_SLIDE_ANIMATION = {
     x: 0,
     transition: { duration: 0.15, ease: "easeInOut" },
   },
-  right_hiden: {
+  right_hidden: {
     opacity: 0,
     x: 376,
     transition: { duration: 0.15, ease: "easeInOut" },
+  },
+};
+
+export const BOTTOM_SHEET_SLIDE_ANIMATION = {
+  active: {
+    y: 0,
+    transition: { duration: 0.4, ease: "easeInOut" },
+  },
+  hidden: {
+    y: "100vh",
+    transition: { duration: 0.3, ease: "easeInOut" },
   },
 };

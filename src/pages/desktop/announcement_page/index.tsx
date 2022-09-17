@@ -11,38 +11,6 @@ import AnnouncementPageStyle from "./style";
 
 interface PageProps {}
 
-const data = {
-  id: 35658933,
-  seen: 986,
-  title: "iPhone 13 Pro, 128Gb, новый в коробке, гарантия 12 месяцев",
-  images: [
-    "/images/products/product_0.jpeg",
-    "/images/products/product_1.jpeg",
-    "/images/products/product_2.jpeg",
-    "/images/products/product_3.jpeg",
-  ],
-  amount: 3,
-  has_guarantee: true,
-  is_sale: true,
-  sale_time: "20",
-  price: 13890000,
-  old_price: 16200000,
-  address: "Ташкент, Мирзо-Улугбекский район",
-  date: "2022-04-24T15:37",
-  is_favorite: false,
-  currency: "uzs",
-  info: {
-    category: "Мобильные телефоны",
-    condition: 10,
-    manufacturer: "Apple",
-    model: "iPhone 13 Pro",
-    storage: 128,
-    color: "Золотой",
-    description:
-      "Новый айфон в идеальном состоянии. Коробка не открыта, вся комплектация (хоть и скудная) но в наличии. Торг уместен, но небольшой. Звонить до 21:00, писать можно в любое время",
-  },
-};
-
 const AnnouncementPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -65,6 +33,7 @@ const AnnouncementPage = () => {
           {data?.images && (
             <ProductImageCarouselDesktop
               data={{
+                product_id: data.id,
                 images: data.images,
                 has_guarantee: data.has_guarantee,
                 price: data.price,

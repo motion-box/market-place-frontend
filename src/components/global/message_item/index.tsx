@@ -7,18 +7,20 @@ import { useRouter } from "next/router";
 
 interface Iprops {
   data: MessageItemModel<"model">;
+  isMobile?: true;
 }
 
-const MessageItem = (props: Iprops) => {
+const MessageItem = ({ data, isMobile }: Iprops) => {
   const router = useRouter();
-  const { id, product, last_message, last_edit_date, user, status } =
-    props.data;
+  const { id, product, last_message, last_edit_date, user, status } = data;
 
   return (
     <MessageItemStyle
       onClick={() =>
         router.push(
-          `/user/messages/chat_room/${product.id}?companion=${user.id}&your=0`
+          `${isMobile ? "/mobile" : ""}/user/messages/chat_room/${
+            product.id
+          }?companion=${user.id}&your=0`
         )
       }
     >

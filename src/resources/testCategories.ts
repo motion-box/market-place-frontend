@@ -172,6 +172,36 @@ export const categoriesData: CategoryModel[] = [
                 name_uz: "Mio",
                 name_oz: "Mio",
               },
+              {
+                id: 12,
+                name_ru: "Huawei",
+                name_uz: "Huawei",
+                name_oz: "Huawei",
+              },
+              {
+                id: 13,
+                name_ru: "Lenovo",
+                name_uz: "Lenovo",
+                name_oz: "Lenovo",
+              },
+              {
+                id: 14,
+                name_ru: "LG",
+                name_uz: "LG",
+                name_oz: "LG",
+              },
+              {
+                id: 15,
+                name_ru: "Meizu",
+                name_uz: "Meizu",
+                name_oz: "Meizu",
+              },
+              {
+                id: 16,
+                name_ru: "Mio",
+                name_uz: "Mio",
+                name_oz: "Mio",
+              },
             ],
           },
           {

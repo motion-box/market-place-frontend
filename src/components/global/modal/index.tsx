@@ -6,11 +6,12 @@ let modal: HTMLElement | null = null;
 
 interface Iprops {
   isModal: boolean;
+  allowBlur?: true;
   children: React.ReactChild | React.ReactElement;
 }
 
 const Modal: React.FC<Iprops> = (props) => {
-  const { isModal, children } = props;
+  const { isModal, allowBlur, children } = props;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -39,7 +40,10 @@ const Modal: React.FC<Iprops> = (props) => {
 
   return mounted
     ? modal
-      ? createPortal(<ModalStyle>{children}</ModalStyle>, modal)
+      ? createPortal(
+          <ModalStyle $allowBlur={allowBlur}>{children}</ModalStyle>,
+          modal
+        )
       : null
     : null;
 };

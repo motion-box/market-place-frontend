@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence } from "framer-motion";
 import UserBankCardPageStyle from "./style";
 import UserPageCont from "../../../../components/desktop/user_page_cont/indext";
-import ProductsGridDesktop from "../../../../components/desktop/products_grid_desktop";
 import { useAppSelector } from "../../../../redux/store";
 import { BigIconsType } from "../../../../resources/icons/BigIcons";
-import { productData } from "../../../../resources/testProducts";
-import { FADE_BOTTOM_ANIMATION } from "../../../../resources/constants/animations";
+import BankCard from "../../../../components/global/bank_card";
+import { AddIcon } from "../../../../resources/icons/CommonIcons";
 
 interface PageProps {}
 
@@ -71,23 +69,6 @@ const pagesData = [
   },
 ];
 
-const sliderData = [
-  {
-    id: 0,
-    key: "recent",
-    name_ru: "Недавние",
-    name_uz: "Недавние",
-    name_oz: "Недавние",
-  },
-  {
-    id: 1,
-    key: "in_archive",
-    name_ru: "В архиве",
-    name_uz: "В архиве",
-    name_oz: "В архиве",
-  },
-];
-
 type PlaceholderModel = {
   id: number;
   title: string;
@@ -97,7 +78,26 @@ type PlaceholderModel = {
   onClick?: () => void;
 };
 
-const hasData = [true, false, false, true];
+interface cardModel {
+  id: number;
+  main: boolean;
+  type: "UZCARD" | "HUMO";
+  number: string;
+}
+const bankCardData: cardModel[] = [
+  {
+    id: 0,
+    main: true,
+    type: "HUMO",
+    number: "9860 **** **** 1986",
+  },
+  {
+    id: 1,
+    main: false,
+    type: "UZCARD",
+    number: "9860 **** **** 1986",
+  },
+];
 
 const UserBankCardPage = (props: PageProps) => {
   const {} = props;
@@ -105,25 +105,24 @@ const UserBankCardPage = (props: PageProps) => {
   const router = useRouter();
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
   const [activeIndex, setActiveIndex] = useState(Number(0));
-  const [activeData, setActiveData] = useState<any>();
 
-  const placeholderData: PlaceholderModel[] = [
-    {
-      id: 0,
-      title: t("no_message"),
-      description: t("no_message_description"),
-      icon: "CardBigIcon",
-      button_text: t("add_announcement"),
-    },
-  ];
+  const placeholderData: PlaceholderModel[] = useMemo(
+    () => [
+      {
+        id: 0,
+        title: t("no_bank_cards"),
+        description: t("no_bank_cards_description"),
+        icon: "CardBigIcon",
+        button_text: t("add_bank_card"),
+        onClick: () => goToAddPage(),
+      },
+    ],
+    []
+  );
 
-  useEffect(() => {
-    setActiveData(
-      productData.map((item) => {
-        return { ...item, expire_date: "2022-09-12T19:40" };
-      })
-    );
-  }, []);
+  const goToAddPage = () => {
+    router.push("/add_bank_card");
+  };
 
   return (
     <UserBankCardPageStyle>
@@ -132,13 +131,19 @@ const UserBankCardPage = (props: PageProps) => {
         active_page={4}
         pages={pagesData}
         placeholder={placeholderData[activeIndex]}
-        // has_data={hasData[activeIndex]}
-        has_data={false}
-        // slider={sliderData}
+        has_data={true}
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       >
-        <AnimatePresence exitBeforeEnter></AnimatePresence>
+        <div className="cards_cont">
+          {bankCardData.map((item) => (
+            <BankCard key={item.id} {...item} />
+          ))}
+          <button className="add_btn" onClick={goToAddPage}>
+            <AddIcon />
+            <span>{t("add_bank_card")}</span>
+          </button>
+        </div>
       </UserPageCont>
     </UserBankCardPageStyle>
   );

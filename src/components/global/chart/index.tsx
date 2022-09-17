@@ -227,6 +227,7 @@ const Chart = (props: Iprops) => {
 
     if (!chart) return;
 
+    // chart.canvas.parentNode.style.height = "400px";
     const chartData: ChartData<"bar", any> = {
       labels,
       datasets: [

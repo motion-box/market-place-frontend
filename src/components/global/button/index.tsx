@@ -8,13 +8,18 @@ interface Iprops {
   text: string;
   icon?: ColorIcons.ColorIconsType | CommonIcons.CommonIconsType;
   onClick: () => void;
+  disabled?: boolean;
   options?: ButtonOptionsType;
 }
 
 const Button = (props: Iprops) => {
-  const { text, icon, onClick, options } = props;
+  const { text, icon, onClick, disabled, options } = props;
   return (
-    <ButtonStyle {...options} onClick={onClick}>
+    <ButtonStyle
+      {...options}
+      disabled={disabled}
+      onClick={() => !disabled && onClick()}
+    >
       <span>{text}</span>
       {icon ? (
         <>

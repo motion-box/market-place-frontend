@@ -36,14 +36,15 @@ const FilterSelector = (props: Iprops) => {
 
   useEffect(() => {
     if (containerRef.current) {
-      if (containerRef.current?.clientHeight >= 400) {
+      console.log(containerRef.current.clientHeight);
+      if (containerRef.current?.clientHeight >= 300) {
         setScrollable(true);
       }
     }
 
     const items_data = data.map((item) => ({ ...item, isSelected: false }));
     setItems(items_data);
-  }, []);
+  }, [items]);
 
   const onItemClick = (id: number) => {
     const item_data = [...items];
@@ -72,7 +73,7 @@ const FilterSelector = (props: Iprops) => {
         className="clipper top_clipper"
         style={{ opacity: topClipper }}
       />
-      <div className="container" ref={itemsContRef}>
+      <motion.div className="container" ref={itemsContRef}>
         {items.map((item, index) => (
           <button key={item.id} onClick={() => onItemClick(index)}>
             <span>{item[`name_${locale}`]}</span>
@@ -90,7 +91,7 @@ const FilterSelector = (props: Iprops) => {
             </AnimatePresence>
           </button>
         ))}
-      </div>
+      </motion.div>
       {isScrollable && (
         <motion.div
           className="clipper bottom_cliper"

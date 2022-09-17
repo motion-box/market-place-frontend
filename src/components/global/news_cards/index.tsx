@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import NewsCardsStyle, { NewsCardStyle } from "./style";
 import * as AllBigIcons from "../../../resources/icons/BigIcons";
 import { CloseIcon } from "../../../resources/icons/CommonIcons";
@@ -8,8 +8,11 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
+import { StoriesModalProps } from "../../desktop/modals/stories_modal";
 
-interface Iprops {}
+interface Iprops {
+  onStoriesPress: (state: StoriesModalProps) => void;
+}
 
 interface CardModel {
   id: number;
@@ -18,6 +21,7 @@ interface CardModel {
   icon: AllBigIcons.BigIconsType;
   grad1: string;
   grad2: string;
+  button_text: string;
 }
 const data: CardModel[] = [
   {
@@ -27,6 +31,7 @@ const data: CardModel[] = [
     icon: "UserBigIcon",
     grad1: "rgb(113, 13, 157)",
     grad2: "rgb(35, 144, 211)",
+    button_text: "Что дает регестрация?",
   },
   {
     id: 1,
@@ -35,6 +40,7 @@ const data: CardModel[] = [
     icon: "CoinsBigIcon",
     grad1: "rgb(162, 59, 59)",
     grad2: "rgb(67, 121, 155)",
+    button_text: "Перейти к скидкам",
   },
   {
     id: 2,
@@ -43,6 +49,7 @@ const data: CardModel[] = [
     icon: "FlyMailBigIcon",
     grad1: "rgb(177, 188, 92)",
     grad2: "rgb(200, 167, 17)",
+    button_text: "К сообщениям",
   },
   {
     id: 3,
@@ -51,12 +58,17 @@ const data: CardModel[] = [
     icon: "WalletBigIcon",
     grad1: "rgb(162, 71, 167)",
     grad2: "rgb(234, 166, 126)",
+    button_text: "К правилам безопасности",
   },
 ];
 
 const NewsCards = (props: Iprops) => {
+  const { onStoriesPress } = props;
   const [index, setIndex] = useState(0);
-  const [exitX, setExitX] = useState("100%");
+
+  const onCardClick = (index: number) => {
+    onStoriesPress({ data: data, activeIndex: index });
+  };
 
   return (
     <NewsCardsStyle>
@@ -71,6 +83,7 @@ const NewsCards = (props: Iprops) => {
           }}
           data={data[index + 1 >= data.length - 1 ? 0 : index + 1]}
           dataLength={data.length}
+          onClick={onCardClick}
         />
         <Card
           key={index >= data.length - 1 ? 0 : index}
@@ -86,6 +99,7 @@ const NewsCards = (props: Iprops) => {
           drag
           data={data[index >= data.length - 1 ? 0 : index]}
           dataLength={data.length}
+          onClick={onCardClick}
         />
       </AnimatePresence>
     </NewsCardsStyle>
@@ -101,6 +115,7 @@ interface CardProps {
   transition?: {};
   dataLength?: number;
   data: CardModel;
+  onClick: (id: number) => void;
 }
 const Card = (props: CardProps) => {
   const {
@@ -112,6 +127,7 @@ const Card = (props: CardProps) => {
     transition,
     data,
     dataLength,
+    onClick,
   } = props;
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-150, 0, 150], [-45, 0, 45], {
@@ -175,6 +191,11 @@ const Card = (props: CardProps) => {
       >
         <CloseIcon width="20" height="20" color="static_white" />
       </button>
+      <button
+        className="card_btn"
+        aria-label="news_card_button"
+        onClick={() => onClick(data.id)}
+      />
     </NewsCardStyle>
   );
 };

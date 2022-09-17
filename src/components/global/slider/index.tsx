@@ -13,10 +13,11 @@ interface Iprops {
   }[];
   activeIndex: number;
   setActiveIndex: (state: number) => void;
+  isMobile?: true;
 }
 
 const Slider = (props: Iprops) => {
-  const { data, activeIndex, setActiveIndex } = props;
+  const { data, activeIndex, setActiveIndex, isMobile } = props;
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
 
   const mapData = data.map((item) => (
@@ -30,7 +31,7 @@ const Slider = (props: Iprops) => {
   ));
 
   return (
-    <SliderStyle>
+    <SliderStyle $isMobile={isMobile}>
       <AnimateSharedLayout>{mapData}</AnimateSharedLayout>
     </SliderStyle>
   );

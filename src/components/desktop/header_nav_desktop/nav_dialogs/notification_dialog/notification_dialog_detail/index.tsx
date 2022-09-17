@@ -55,7 +55,7 @@ const NotificationDialogDetail = ({ goBack }: Iprops) => {
       variants={DIALOG_SLIDE_ANIMATION}
       initial="left_hidden"
       animate="visible"
-      exit="right_hiden"
+      exit="right_hidden"
       ref={notifContRef}
     >
       <button className="back_icon" onClick={() => goBack(false)}>

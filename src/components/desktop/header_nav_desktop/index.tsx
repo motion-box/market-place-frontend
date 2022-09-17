@@ -1,4 +1,5 @@
 import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { ColorIconsType } from "../../../resources/icons/ColorIcons";
 import HeaderDialogsDesktop from "../header_dialogs_desktop";
@@ -24,8 +25,14 @@ const navButtons: ButtonModel[] = [
 
 const HeaderNavDesktop = (props: Iprops) => {
   const [activeButton, setActiveButton] = useState<number | false>(false);
+  const router = useRouter();
 
   const onButtonClick = (index: number) => {
+    if (index === 2) {
+      setActiveButton(false);
+      router.push("/user/favorites?active=0");
+      return;
+    }
     setActiveButton(index !== activeButton ? index : false);
   };
   const closeDialog = () => {
@@ -59,7 +66,7 @@ const HeaderNavDesktop = (props: Iprops) => {
             isDialog={activeButton === 1}
             setDialog={() => setActiveButton(false)}
           >
-            <MessageDialog />
+            <MessageDialog closeDialog={closeDialog} />
           </HeaderDialogsDesktop>
         ) : null}
         {activeButton === 3 ? (

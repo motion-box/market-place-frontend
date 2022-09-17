@@ -15,9 +15,9 @@ const AccountDialogSupport = ({ goBack }: Iprops) => {
   return (
     <AccountDialogSupportStyle
       variants={DIALOG_SLIDE_ANIMATION}
-      initial="right_hiden"
+      initial="right_hidden"
       animate="visible"
-      exit="right_hiden"
+      exit="right_hidden"
       className="support_cont"
     >
       <button className="back_icon" onClick={() => goBack(false)}>

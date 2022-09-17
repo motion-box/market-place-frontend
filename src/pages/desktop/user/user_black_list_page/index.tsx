@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence } from "framer-motion";
 import UserBlackListPageStyle from "./style";
 import UserPageCont from "../../../../components/desktop/user_page_cont/indext";
-import ProductsGridDesktop from "../../../../components/desktop/products_grid_desktop";
 import { useAppSelector } from "../../../../redux/store";
 import { BigIconsType } from "../../../../resources/icons/BigIcons";
-import { productData } from "../../../../resources/testProducts";
-import { FADE_BOTTOM_ANIMATION } from "../../../../resources/constants/animations";
+import { sellerData } from "../../../../resources/testSellers";
+import SellerCard from "../../../../components/global/seller_card";
 
 interface PageProps {}
 
@@ -71,23 +69,6 @@ const pagesData = [
   },
 ];
 
-const sliderData = [
-  {
-    id: 0,
-    key: "recent",
-    name_ru: "Недавние",
-    name_uz: "Недавние",
-    name_oz: "Недавние",
-  },
-  {
-    id: 1,
-    key: "in_archive",
-    name_ru: "В архиве",
-    name_uz: "В архиве",
-    name_oz: "В архиве",
-  },
-];
-
 type PlaceholderModel = {
   id: number;
   title: string;
@@ -97,33 +78,43 @@ type PlaceholderModel = {
   onClick?: () => void;
 };
 
-const hasData = [true, false, false, true];
+const sellersDate = [
+  "online",
+  "5 часов назад",
+  "3 часа назад",
+  "2 дня назад",
+  "1 месяц назад",
+];
+
+const hasData = true;
 
 const UserBlackListPage = (props: PageProps) => {
   const {} = props;
   const { t } = useTranslation();
   const router = useRouter();
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
-  const [activeIndex, setActiveIndex] = useState(Number(0));
-  const [activeData, setActiveData] = useState<any>();
 
-  const placeholderData: PlaceholderModel[] = [
-    {
+  const placeholderData: PlaceholderModel = useMemo(
+    () => ({
       id: 0,
-      title: t("no_message"),
-      description: t("no_message_description"),
+      title: t("no_black_list"),
+      description: t("no_black_list_description"),
       icon: "BlackListBigIcon",
       button_text: t("add_announcement"),
-    },
-  ];
+    }),
+    []
+  );
 
-  useEffect(() => {
-    setActiveData(
-      productData.map((item) => {
-        return { ...item, expire_date: "2022-09-12T19:40" };
-      })
-    );
-  }, []);
+  const sellers = useMemo(
+    () =>
+      sellerData.map((item, index) => ({
+        data: item,
+        type: "blocked",
+        online: sellersDate[index],
+        onCardClick: () => router.push(`/seller/${item.id}/announcements`),
+      })),
+    []
+  );
 
   return (
     <UserBlackListPageStyle>
@@ -131,14 +122,16 @@ const UserBlackListPage = (props: PageProps) => {
         title={pagesData[7][`name_${locale}`]}
         active_page={7}
         pages={pagesData}
-        placeholder={placeholderData[activeIndex]}
-        // has_data={hasData[activeIndex]}
-        has_data={false}
-        // slider={sliderData}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+        placeholder={placeholderData}
+        has_data={hasData}
+        activeIndex={0}
+        setActiveIndex={(e) => console.log(e)}
       >
-        <AnimatePresence exitBeforeEnter></AnimatePresence>
+        <div className="content_wrapper">
+          {sellers.map((item) => (
+            <SellerCard key={item.data.id} {...item} />
+          ))}
+        </div>
       </UserPageCont>
     </UserBlackListPageStyle>
   );

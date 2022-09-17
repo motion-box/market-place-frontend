@@ -124,7 +124,7 @@ const ProductCardOptions = (props: Iprops) => {
         }),
       } as NotifyModalProps);
     } else {
-      navigateTo(`/user/boosts?announcement_id=${product_id}`);
+      navigateTo(`/boost_announcement/turbo?product_id=${product_id}`);
     }
   };
 

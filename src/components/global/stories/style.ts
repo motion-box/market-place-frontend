@@ -12,6 +12,7 @@ const StoriesStyle = styled(motion.div)`
     grid-auto-columns: min-content;
     gap: 8px;
     overflow-x: scroll;
+
     ::-webkit-scrollbar {
       height: 0px;
       display: none;
@@ -27,12 +28,6 @@ const StoriesStyle = styled(motion.div)`
     overflow: hidden;
     background: rgb(255, 90, 52);
     padding: 2px;
-    background: linear-gradient(
-      110deg,
-      rgba(255, 90, 52, 1) 0%,
-      rgba(244, 113, 0, 1) 40%,
-      rgba(255, 226, 0, 1) 100%
-    );
     .image_wrapper {
       position: relative;
       width: 100%;
@@ -46,6 +41,22 @@ const StoriesStyle = styled(motion.div)`
         user-select: none;
       }
     }
+  }
+  .item.stories {
+    background: linear-gradient(
+      110deg,
+      rgba(255, 90, 52, 1) 0%,
+      rgba(244, 113, 0, 1) 40%,
+      rgba(255, 226, 0, 1) 100%
+    );
+  }
+  .item.news {
+    background: linear-gradient(
+      110deg,
+      rgba(50, 185, 73, 1) 0%,
+      rgba(33, 148, 249, 1) 40%,
+      rgba(28, 19, 185, 1) 100%
+    );
   }
   .item.read {
     background: var(--border_color);
@@ -106,6 +117,11 @@ const StoriesStyle = styled(motion.div)`
         var(--bg_gradient_0) 0%,
         var(--bg_gradient_1) 50%
       );
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .slider {
+      padding: 0 16px;
     }
   }
 `;

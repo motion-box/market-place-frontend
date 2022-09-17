@@ -108,7 +108,6 @@ export const productData: ProductModel[] = [
       "/images/products/product_3/1.jpeg",
       "/images/products/product_3/2.jpeg",
       "/images/products/product_3/3.jpeg",
-      "/images/products/product_3/4.jpeg",
     ],
     amount: 400,
     has_guarantee: true,
@@ -365,7 +364,6 @@ export const productData: ProductModel[] = [
       "/images/products/product_3/1.jpeg",
       "/images/products/product_3/2.jpeg",
       "/images/products/product_3/3.jpeg",
-      "/images/products/product_3/4.jpeg",
     ],
     amount: 400,
     has_guarantee: true,
@@ -514,5 +512,38 @@ export const productData: ProductModel[] = [
       description:
         "Телевизор Samsung Smart 43 с оптового склада в Ташкенте. Бесплатная доставка по городу. Матрица IPS под защитой. Встроенная память 8ГБ оперативная 1,5ГБ. Операционная система Android 9. Бесплатная прошивка установка более 1500 бесплатных каналов более 300000 фильмов youtube без рекламы. Гарантия 1 год. Один месяц полная замена. * ТВ на Android 9, доступны миллионы приложений.",
     },
+  },
+];
+
+export const productAmountsPrice = [
+  {
+    id: 0,
+    name_ru: "1 товар - бесплатно",
+    name_uz: "1 та махсулот - бепул",
+    name_oz: "1 ta mahsulot - bepul",
+  },
+  {
+    id: 1,
+    name_ru: "2 товара - 500 сум",
+    name_uz: "2 та махсулот - 500 сум",
+    name_oz: "2 ta mahsulot - 500 so'm",
+  },
+  {
+    id: 2,
+    name_ru: "3 товара - 1000 сум",
+    name_uz: "3 та махсулот - 1000 сум",
+    name_oz: "3 ta mahsulot - 1000 so'm",
+  },
+  {
+    id: 3,
+    name_ru: "4 товара - 2000 сум",
+    name_uz: "4 та махсулот - 2000 сум",
+    name_oz: "4 ta mahsulot - 2000 so'm",
+  },
+  {
+    id: 4,
+    name_ru: "5 товаров - 3500 сум",
+    name_uz: "5 та махсулот - 3500 сум",
+    name_oz: "5 ta mahsulot - 3500 so'm",
   },
 ];

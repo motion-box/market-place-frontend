@@ -8,6 +8,9 @@ import ProductDataDesktopStyle from "./style";
 import ShareButton from "../../global/share_button";
 import BuyButton from "../../global/buy_button";
 import ProductTab from "../product_tab";
+import { useRouter } from "next/router";
+import { AnimatePresence } from "framer-motion";
+import PriceOfferDialog from "../price_offer_dialog";
 
 interface Iprops {
   data: {
@@ -39,7 +42,18 @@ interface Iprops {
 
 const ProductDataDesktop = ({ data }: Iprops) => {
   const { t } = useTranslation();
+  const router = useRouter();
   const [isFavorite, setFavorite] = useState(false);
+  const [offerDialog, setOfferDialog] = useState(false);
+
+  const writeToSeller = () => {
+    router.push(`/user/messages/chat_room/${data.id}?companion=${0}&your=${0}`);
+  };
+
+  const closeDialog = () => {
+    setOfferDialog(false);
+  };
+
   return (
     <ProductDataDesktopStyle>
       <div className="top_cont">
@@ -81,7 +95,7 @@ const ProductDataDesktop = ({ data }: Iprops) => {
       <div className="buttons_cont">
         <Button
           text={t("write_to_seller")}
-          onClick={() => console.log("write to seller")}
+          onClick={writeToSeller}
           options={{
             $borderColor: "static_red",
             $textColor: "static_red",
@@ -92,7 +106,7 @@ const ProductDataDesktop = ({ data }: Iprops) => {
         />
         <Button
           text={t("offer_price")}
-          onClick={() => console.log("offer price")}
+          onClick={() => setOfferDialog(true)}
           options={{
             $borderColor: "static_red",
             $textColor: "static_white",
@@ -100,6 +114,9 @@ const ProductDataDesktop = ({ data }: Iprops) => {
             $hoverBorderColor: "static_red",
           }}
         />
+        <AnimatePresence>
+          {offerDialog && <PriceOfferDialog closeDialog={closeDialog} />}
+        </AnimatePresence>
         <ShareButton
           onClick={() => console.log("share")}
           options={{
@@ -122,6 +139,7 @@ const ProductDataDesktop = ({ data }: Iprops) => {
         price={data.price}
         currency={data.currency}
         has_guarantee={data.has_guarantee}
+        product_id={data.id}
       />
       <div />
       <ProductTab info={data.info} />

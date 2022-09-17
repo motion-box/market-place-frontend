@@ -83,13 +83,35 @@ const ChartStyle = styled.div`
   @media only screen and (max-width: 1190px) {
     grid-template-areas:
       "legend legend"
-      "spacer chart"
+      "chart chart"
+      "spacer spacer"
       "controller controller";
     grid-template-columns: 1fr;
     gap: 36px 0;
     .legend {
       grid-auto-flow: column;
       justify-content: center;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .chart_cont {
+      width: 100%;
+      height: 100%;
+    }
+    .controller {
+      width: 100%;
+      box-shadow: none;
+      padding: 0;
+
+      .control {
+        padding: 0;
+      }
+      .control_right {
+        justify-content: end;
+      }
+      span {
+        text-align: center;
+      }
     }
   }
 `;

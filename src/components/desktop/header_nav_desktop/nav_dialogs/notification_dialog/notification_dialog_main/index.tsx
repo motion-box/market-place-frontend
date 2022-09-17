@@ -137,7 +137,7 @@ const NotificationDialogMain = ({ onItemClick }: Iprops) => {
       variants={DIALOG_SLIDE_ANIMATION}
       initial="visible"
       animate="visible"
-      exit="left_hiden"
+      exit="left_hidden"
     >
       <span className="dialog_title">{t("notifications")}</span>
       <motion.div

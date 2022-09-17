@@ -6,6 +6,10 @@ const NewsCardsStyle = styled(motion.div)`
   width: 328px;
   height: 106px;
   position: relative;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 interface CardProps {
   grad1: string;
@@ -43,6 +47,15 @@ export const NewsCardStyle = styled(motion.div)<CardProps>`
     position: absolute;
     top: 8px;
     right: 8px;
+    z-index: 1;
+  }
+
+  .card_btn {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
   }
 
   :hover {

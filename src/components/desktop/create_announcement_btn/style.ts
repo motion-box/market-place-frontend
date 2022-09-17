@@ -1,5 +1,5 @@
 import styled from "styled-components";
-const CreateAnnouncementBtnStyle = styled.button`
+const CreateAnnouncementBtnStyle = styled.a`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -9,6 +9,7 @@ const CreateAnnouncementBtnStyle = styled.button`
   padding: 0 12px;
   border-radius: 12px;
   transition: 0.2s ease;
+  cursor: pointer;
 
   :hover {
     background-color: var(--bg_color);

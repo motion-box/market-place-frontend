@@ -63,7 +63,7 @@ const items: {
     icon: "InfoIcon",
     text: "q_a",
     iconColor: "static_pantone",
-    route: "/user/announcements?status=0",
+    route: "/questions_and_answers",
   },
   {
     icon: "SupportIcon",
@@ -87,7 +87,7 @@ const AccountDialogMain = (props: Iprops) => {
       variants={DIALOG_SLIDE_ANIMATION}
       initial="visible"
       animate="visible"
-      exit="left_hiden"
+      exit="left_hidden"
     >
       <span className="dialog_title">{t("account")}</span>
       <div className="item_cont">

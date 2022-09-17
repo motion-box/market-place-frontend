@@ -22,10 +22,11 @@ export interface MessageModalProps {
     name: string;
     route: string;
   }[];
+  allowBlur?: true;
 }
 
 const MessageModal = NiceModal.create<MessageModalProps>((props) => {
-  const { icon, title, description, button, buttons } = props;
+  const { icon, title, description, button, buttons, allowBlur } = props;
   const modal = useModal();
   const router = useRouter();
 
@@ -36,7 +37,7 @@ const MessageModal = NiceModal.create<MessageModalProps>((props) => {
   };
 
   return (
-    <Modal isModal={modal.visible}>
+    <Modal isModal={modal.visible} allowBlur={allowBlur}>
       <MessageModalStyle className="modal_shadow">
         <button
           aria-label="close_button"

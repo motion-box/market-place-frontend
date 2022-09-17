@@ -113,5 +113,19 @@ const ProductCardStyle = styled(motion.div)`
     right: 0;
     z-index: 1;
   }
+
+  @media only screen and (max-width: 500px) {
+    .image_cont {
+      .sale_cont {
+        width: calc(100% - 8px);
+        justify-content: space-between;
+      }
+    }
+    .content {
+      .bottom_cont {
+        grid-auto-flow: row;
+      }
+    }
+  }
 `;
 export default ProductCardStyle;

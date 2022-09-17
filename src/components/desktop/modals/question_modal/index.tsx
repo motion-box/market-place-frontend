@@ -10,15 +10,16 @@ import { useTranslation } from "next-i18next";
 export interface QuestionModalProps {
   icon: BigIcons.BigIconsType;
   title: string;
+  allowBlur?: true;
 }
 
 const QuestionModal = NiceModal.create<QuestionModalProps>((props) => {
-  const { icon, title } = props;
+  const { icon, title, allowBlur } = props;
   const { t } = useTranslation();
   const modal = useModal();
 
   return (
-    <Modal isModal={modal.visible}>
+    <Modal isModal={modal.visible} allowBlur={allowBlur}>
       <QuestionModalStyle className="modal_shadow">
         <button
           aria-label="close_button"

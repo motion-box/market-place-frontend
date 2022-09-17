@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 import { ShieldColorIcon } from "../../../resources/icons/ColorIcons";
 import Button from "../button";
 import BuyButtonStyle from "./style";
@@ -7,11 +8,14 @@ interface Iprops {
   price: number;
   currency: "uzs" | "usd" | string;
   has_guarantee: boolean;
+  product_id: number;
 }
 
 const BuyButton = (props: Iprops) => {
+  const { price, currency, has_guarantee, product_id } = props;
   const { t } = useTranslation();
-  const { price, currency, has_guarantee } = props;
+  const router = useRouter();
+
   return (
     <BuyButtonStyle>
       <div className="left_cont">
@@ -33,7 +37,7 @@ const BuyButton = (props: Iprops) => {
       </div>
       <Button
         text={t("buy")}
-        onClick={() => console.log("buy")}
+        onClick={() => router.push(`/create_order/${product_id}`)}
         options={{
           $backgroundColor: "static_red",
           $textColor: "static_white",

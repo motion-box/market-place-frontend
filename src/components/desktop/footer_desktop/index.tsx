@@ -101,4 +101,4 @@ const FooterDesktop = (props: Iprops) => {
     </FooterDesktopStyle>
   );
 };
-export default FooterDesktop;
+export default React.memo(FooterDesktop);

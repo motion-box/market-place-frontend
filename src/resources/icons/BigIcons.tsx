@@ -2944,6 +2944,90 @@ export const RadialGradBigIcon = ({ width, height }: Iprops) => {
   );
 };
 
+export const CircleRowBigIcon = ({ width, height }: Iprops) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width || "192"}
+      height={height || "189.99"}
+      viewBox="0 0 192 189.99"
+    >
+      <g id="Сгруппировать_293" data-name="Сгруппировать 293" opacity="0.5">
+        <g
+          id="Эллипс_797"
+          data-name="Эллипс 797"
+          transform="translate(86 85.099)"
+          fill="none"
+          stroke="#d32424"
+          strokeWidth="2"
+        >
+          <ellipse cx="10" cy="9.895" rx="10" ry="9.895" stroke="none" />
+          <ellipse cx="10" cy="9.895" rx="9" ry="8.895" fill="none" />
+        </g>
+        <g
+          id="Эллипс_798"
+          data-name="Эллипс 798"
+          transform="translate(79 78.173)"
+          fill="none"
+          stroke="#d32424"
+          strokeWidth="1.8"
+          opacity="0.6"
+        >
+          <ellipse cx="17" cy="16.822" rx="17" ry="16.822" stroke="none" />
+          <ellipse cx="17" cy="16.822" rx="16.1" ry="15.922" fill="none" />
+        </g>
+        <g
+          id="Эллипс_799"
+          data-name="Эллипс 799"
+          transform="translate(69 68.277)"
+          fill="none"
+          stroke="#d32424"
+          strokeWidth="1.6"
+          opacity="0.4"
+        >
+          <ellipse cx="27" cy="26.717" rx="27" ry="26.717" stroke="none" />
+          <ellipse cx="27" cy="26.717" rx="26.2" ry="25.917" fill="none" />
+        </g>
+        <g
+          id="Эллипс_800"
+          data-name="Эллипс 800"
+          transform="translate(56 55.414)"
+          fill="none"
+          stroke="#d32424"
+          strokeWidth="1.4"
+          opacity="0.2"
+        >
+          <ellipse cx="40" cy="39.581" rx="40" ry="39.581" stroke="none" />
+          <ellipse cx="40" cy="39.581" rx="39.3" ry="38.881" fill="none" />
+        </g>
+        <g
+          id="Эллипс_801"
+          data-name="Эллипс 801"
+          transform="translate(30 29.686)"
+          fill="none"
+          stroke="#d32424"
+          strokeWidth="1.2"
+          opacity="0.1"
+        >
+          <ellipse cx="66" cy="65.309" rx="66" ry="65.309" stroke="none" />
+          <ellipse cx="66" cy="65.309" rx="65.4" ry="64.709" fill="none" />
+        </g>
+        <g
+          id="Эллипс_802"
+          data-name="Эллипс 802"
+          fill="none"
+          stroke="#d32424"
+          strokeWidth="1"
+          opacity="0.1"
+        >
+          <ellipse cx="96" cy="94.995" rx="96" ry="94.995" stroke="none" />
+          <ellipse cx="96" cy="94.995" rx="95.5" ry="94.495" fill="none" />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
 export const BigIconsName = [
   "QuestionBigIcon",
   "StarBigIcon",
@@ -2981,6 +3065,7 @@ export const BigIconsName = [
   "AppStoreBigIcon",
   "PlayMarketBigIcon",
   "RadialGradBigIcon",
+  "CircleRowBigIcon",
 ] as const;
 
 export type BigIconsType = ArrayTyper<typeof BigIconsName>;

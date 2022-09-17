@@ -9,7 +9,7 @@ const UserMessages = () => {
   const { t } = useTranslation();
   return (
     <>
-      <MetaHead title={`${t("logo")} | ${t("announcements")}`} description="" />
+      <MetaHead title={`${t("logo")} | ${t("favorites")}`} description="" />
       <UserFavoritePage />
     </>
   );

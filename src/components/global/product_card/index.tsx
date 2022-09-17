@@ -12,6 +12,7 @@ import { ClockIcon } from "../../../resources/icons/CommonIcons";
 interface Iprops extends ProductModel {
   editable?: "active" | "disabled";
   expire_date?: string;
+  is_mobile?: true;
 }
 
 const ProductCard = (props: Iprops) => {
@@ -30,6 +31,7 @@ const ProductCard = (props: Iprops) => {
     currency,
     editable,
     expire_date,
+    is_mobile,
   } = props;
   const [isFavorite, setFavorite] = useState(is_favorite);
   const router = useRouter();
@@ -38,7 +40,7 @@ const ProductCard = (props: Iprops) => {
     router.push(
       editable
         ? `/user/announcements/announcement/${id}`
-        : `/announcement/${id}`
+        : `${is_mobile ? "/mobile" : ""}/announcement/${id}`
     );
   };
 

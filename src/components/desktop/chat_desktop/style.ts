@@ -14,8 +14,6 @@ const ChatDesktopStyle = styled.div`
     width: 100%;
     height: 420px;
     overflow-y: scroll;
-    /* align-items: flex-end; */
-    /* align-content: flex-end; */
     gap: 8px;
 
     .date_cont {

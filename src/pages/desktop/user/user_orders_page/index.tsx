@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import UserOrdersPageStyle from "./style";
 import UserPageCont from "../../../../components/desktop/user_page_cont/indext";
-import ProductsGridDesktop from "../../../../components/desktop/products_grid_desktop";
 import { useAppSelector } from "../../../../redux/store";
 import { BigIconsType } from "../../../../resources/icons/BigIcons";
 import { productData } from "../../../../resources/testProducts";
 import { FADE_BOTTOM_ANIMATION } from "../../../../resources/constants/animations";
+import OrderCard from "../../../../components/global/order_card";
+import {
+  activeOrderData,
+  notActiveOrderData,
+} from "../../../../resources/testOrders";
 
 interface PageProps {}
 
@@ -74,17 +78,17 @@ const pagesData = [
 const sliderData = [
   {
     id: 0,
-    key: "recent",
-    name_ru: "Недавние",
-    name_uz: "Недавние",
-    name_oz: "Недавние",
+    key: "active",
+    name_ru: "Активные",
+    name_uz: "Фаол",
+    name_oz: "Faol",
   },
   {
     id: 1,
-    key: "in_archive",
-    name_ru: "В архиве",
-    name_uz: "В архиве",
-    name_oz: "В архиве",
+    key: "not_active",
+    name_ru: "Не активные",
+    name_uz: "Фаол эмас",
+    name_oz: "Faol emas",
   },
 ];
 
@@ -97,7 +101,7 @@ type PlaceholderModel = {
   onClick?: () => void;
 };
 
-const hasData = [true, false, false, true];
+const hasData = [true, true];
 
 const UserOrdersPage = (props: PageProps) => {
   const {} = props;
@@ -105,25 +109,39 @@ const UserOrdersPage = (props: PageProps) => {
   const router = useRouter();
   const { locale } = useAppSelector((state) => state.globalSliceReducer);
   const [activeIndex, setActiveIndex] = useState(Number(0));
-  const [activeData, setActiveData] = useState<any>();
 
   const placeholderData: PlaceholderModel[] = [
     {
       id: 0,
-      title: t("no_message"),
-      description: t("no_message_description"),
+      title: t("no_active_orders"),
+      description: t("no_active_orders_description"),
       icon: "BoxBigIcon",
-      button_text: t("add_announcement"),
+    },
+    {
+      id: 1,
+      title: t("no_complited_orders"),
+      description: t("no_complited_orders_description"),
+      icon: "BoxBigIcon",
     },
   ];
 
-  useEffect(() => {
-    setActiveData(
-      productData.map((item) => {
-        return { ...item, expire_date: "2022-09-12T19:40" };
-      })
-    );
-  }, []);
+  const activeData = useMemo(
+    () =>
+      activeOrderData.map((item) => ({
+        ...item,
+        product: productData[item.product_id],
+      })),
+    []
+  );
+
+  const notActiveData = useMemo(
+    () =>
+      notActiveOrderData.map((item) => ({
+        ...item,
+        product: productData[item.product_id],
+      })),
+    []
+  );
 
   return (
     <UserOrdersPageStyle>
@@ -132,13 +150,41 @@ const UserOrdersPage = (props: PageProps) => {
         active_page={6}
         pages={pagesData}
         placeholder={placeholderData[activeIndex]}
-        // has_data={hasData[activeIndex]}
-        has_data={false}
-        // slider={sliderData}
+        has_data={hasData[activeIndex]}
+        slider={sliderData}
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       >
-        <AnimatePresence exitBeforeEnter></AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
+          {activeIndex === 0 && (
+            <motion.div
+              key={sliderData[0].key}
+              variants={FADE_BOTTOM_ANIMATION}
+              initial="hidden"
+              animate="active"
+              exit="hidden"
+              className="content_wrapper"
+            >
+              {activeData.map((item) => (
+                <OrderCard key={item.id} {...item} active={true} />
+              ))}
+            </motion.div>
+          )}
+          {activeIndex === 1 && (
+            <motion.div
+              key={sliderData[1].key}
+              variants={FADE_BOTTOM_ANIMATION}
+              initial="hidden"
+              animate="active"
+              exit="hidden"
+              className="content_wrapper"
+            >
+              {notActiveData.map((item) => (
+                <OrderCard key={item.id} {...item} active={false} />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </UserPageCont>
     </UserOrdersPageStyle>
   );

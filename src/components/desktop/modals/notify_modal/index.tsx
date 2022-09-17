@@ -10,13 +10,14 @@ export interface NotifyModalProps {
   title: string;
   subtitle?: string;
   description: string;
+  allowBlur?: true;
 }
 
 const NotifyModal = NiceModal.create<NotifyModalProps>((props) => {
-  const { icon, title, subtitle, description } = props;
+  const { icon, title, subtitle, description, allowBlur } = props;
   const modal = useModal();
   return (
-    <Modal isModal={modal.visible}>
+    <Modal isModal={modal.visible} allowBlur={allowBlur}>
       <NotifyModalStyle className="modal_shadow">
         <button
           aria-label="close_button"
